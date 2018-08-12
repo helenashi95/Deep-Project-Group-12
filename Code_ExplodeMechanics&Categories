@@ -1,0 +1,22 @@
+# Separate ',' deliniated string values in mechanic and category columns
+# --Explode mechanic data to separate rows
+"""COURTESY OF: https://stackoverflow.com/questions/12680754/split-explode-pandas-dataframe-string-entry-to-separate-rows"""
+games_mechanics = DataFrame(games['mechanic'].str.split(',').tolist(), index=games['avg_rating']).stack()
+games_mechanics = games_mechanics.reset_index()[[0, 'avg_rating']]
+games_mechanics.columns = ['mechanic', 'avg_rating']
+# --Clean whitespace
+games_mechanics['mechanic'] = games_mechanics['mechanic'].map(removeWhiteSpace)
+
+print "game mechanics, first 2 rows expanded:"
+print games_mechanics[:16]
+
+# --Explode category data to separate rows
+"""COURTESY OF: https://stackoverflow.com/questions/12680754/split-explode-pandas-dataframe-string-entry-to-separate-rows"""
+games_categories = DataFrame(games['category'].str.split(',').tolist(), index=games['avg_rating']).stack()
+games_categories = games_categories.reset_index()[[0, 'avg_rating']]
+games_categories.columns = ['category', 'avg_rating']
+# --Clean whitespace
+games_categories['category'] = games_categories['category'].map(removeWhiteSpace)
+
+print "\n\ngame categories, first 2 rows expanded:"
+print games_categories[:7]
